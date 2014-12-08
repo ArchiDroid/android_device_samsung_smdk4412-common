@@ -533,6 +533,15 @@ service macloader /system/bin/macloader
     class main
     oneshot
 
+# GSM/HSDPA data workaround
+service data_workaround /system/bin/enable_data
+    user root
+    disabled
+
+# GSM/HSDPA data Workaroud
+on property:gsm.defaultpdpcontext.active=true
+    start data_workaround
+
 # Workaround for broken incall audio
 service bootsnd /system/bin/tinyplay /system/etc/sound/silence.wav -D 0 -d 0 -p 880
     class late_start

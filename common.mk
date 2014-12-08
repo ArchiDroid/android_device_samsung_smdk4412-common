@@ -108,6 +108,10 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
     frameworks/av/media/libstagefright/data/media_codecs_ffmpeg.xml:system/etc/media_codecs_ffmpeg.xml
 
+# Data workaround
+PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/configs/enable_data:system/bin/enable_data
+
 # Filesystem management tools
 PRODUCT_PACKAGES += \
     static_busybox \
