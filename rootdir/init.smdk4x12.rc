@@ -37,6 +37,22 @@ on init
     mkdir /tombstones
     symlink /efs /factory
 
+on charger
+# set cpu governor to powersave while in charging mode
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor pegasusq
+
+# EHCI runtime enable for LPA
+    write /sys/devices/platform/s5p-ehci/power/control auto
+
+    mkdir /data/log 0777
+    chmod 0666 /dev/log/radio
+    chmod 0666 /dev/log/main
+    chmod 0666 /dev/log/event
+
+    ifup lo
+    hostname localhost
+    domainname localdomain
+
 on fs
     mkdir /preload
     mount_all /fstab.smdk4x12
@@ -434,6 +450,11 @@ service sec_keyboard /system/bin/sec_keyboard /dev/ttySAC2
 
 on property:ro.uart_debug=0
     start sec_keyboard
+
+service charger /sbin/healthd -c
+    class charger
+    critical
+    seclabel u:r:healthd:s0
 
 # create virtual SD card at /mnt/sdcard, based on the /data/media directory
 # daemon will drop to user/group system/media_rw after initializing
