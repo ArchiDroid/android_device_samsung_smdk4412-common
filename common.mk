@@ -29,7 +29,6 @@ $(call inherit-product, device/common/gps/gps_us_supl.mk)
 PRODUCT_COPY_FILES := \
     $(COMMON_PATH)/rootdir/init.smdk4x12.rc:root/init.smdk4x12.rc \
     $(COMMON_PATH)/rootdir/init.smdk4x12.usb.rc:root/init.smdk4x12.usb.rc \
-    $(COMMON_PATH)/rootdir/lpm.rc:root/lpm.rc \
     $(COMMON_PATH)/rootdir/init.trace.rc:root/init.trace.rc \
     $(COMMON_PATH)/rootdir/ueventd.smdk4x12.rc:root/ueventd.smdk4x12.rc \
     $(COMMON_PATH)/rootdir/ueventd.smdk4x12.rc:recovery/root/ueventd.smdk4x12.rc
@@ -109,6 +108,10 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
     frameworks/av/media/libstagefright/data/media_codecs_ffmpeg.xml:system/etc/media_codecs_ffmpeg.xml
 
+# Data workaround
+PRODUCT_COPY_FILES += \
+    $(COMMON_PATH)/configs/enable_data:system/bin/enable_data
+
 # Filesystem management tools
 PRODUCT_PACKAGES += \
     static_busybox \
@@ -134,6 +137,10 @@ PRODUCT_PACKAGES += \
     hostapd_default.conf \
     dhcpcd.conf \
     wpa_supplicant
+
+# Charger
+PRODUCT_PACKAGES += \
+    charger_res_images
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
